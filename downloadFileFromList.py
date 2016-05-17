@@ -1,9 +1,39 @@
+import urllib
+import urllib2
+import json
+
 __author__ = 'VDTConstructor'
-import os
 
-if __name__ == '__main__':
-	url = '\"http://qd.poms.baidupcs.com/file/8bbca60468ce14167e85aad5e4cefc8c?bkt=p3-14008bbca60468ce14167e85aad5e4cefc8caf60fc380000000003e0&fid=3525507348-250528-366277664328187&time=1456908130&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-v%2FrEJ4oqJvRcZ6BZFCt1anzkM4o%3D&to=qb&fm=Nin,B,U,nc&sta_dx=0&sta_cs=0&sta_ft=gz&sta_ct=5&fm2=Ningbo,B,U,nc&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=14008bbca60468ce14167e85aad5e4cefc8caf60fc380000000003e0&sl=80609359&expires=8h&rt=pr&r=568952563&mlogid=1430903358120920959&vuk=3525507348&vbdid=4032129892&fin=chinese.gz&fn=chinese.gz&slt=pm&uta=0&rtype=1&iv=0&isw=0&dp-logid=1430903358120920959&dp-callid=0.1.1\"'
-	command = 'wget -c -O 1.gz '+ url
-	os.system(command)
+# url = 'http://www.cninfo.com.cn/cninfo-new/disclosure/sse_latest'
+url = 'http://www.cninfo.com.cn/cninfo-new/announcement/query'
+values = {'stock': '',
+          'searchkey': '2014%E5%B9%B4%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A%E6%91%98%E8%A6%81%3B',
+          'plate': '',
+          'category': '',
+          'trade': '',
+          'column': 'sse',
+          'columnTitle': '%E5%8E%86%E5%8F%B2%E5%85%AC%E5%91%8A%E6%9F%A5%E8%AF%A2',
+          'pageNum': '1',
+          'pageSize': '30',
+          'tabName': 'fulltext',
+          'sortName': '',
+          'sortType': '',
+          'limit': '',
+          'showTitle': '',
+          'seDate': '%E8%AF%B7%E9%80%89%E6%8B%A9%E6%97%A5%E6%9C%9F'
+          }
+data = urllib.urlencode(values)
+print data
+req = urllib2.Request(url, data)
+response = urllib2.urlopen(req)
+the_page = response.read()
+# print the_page
+the_page_json = json.loads(the_page)
+# print the_page_json
 
-	print 'here'
+print the_page_json['hasMore']
+file_object = open('thefile.txt', 'w')
+file_object.write(the_page)
+file_object.close()
+print 'finish'
+
