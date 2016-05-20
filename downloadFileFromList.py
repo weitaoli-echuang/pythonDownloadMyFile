@@ -20,7 +20,6 @@ def announcement(url, values):
         values['pageNum'] = str(int(values['pageNum']) + 1)
         content = requests.post(url, data=values)
         content_json = json.loads(content.text)
-        import pdb; pdb.set_trace()  # breakpoint fc1a5200 //
         announcement_list.append(content_json['announcements'])
 
     return announcement_list
