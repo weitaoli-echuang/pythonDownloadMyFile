@@ -1,4 +1,14 @@
 # coding:UTF-8
+
+
+"""
+File: downloadFileFromList.py
+Author: Weitao Li
+Email: weitaoli@gmail.com
+Github:
+Description: use to download pdf file from cninfo.com
+"""
+
 import json
 import requests
 import os
@@ -12,11 +22,15 @@ __author__ = 'VDTConstructor'
 
 
 def announcement(url, values):
+    """
+    try to get file's download address from the url
+    """
     announcement_list = []
     content = requests.post(url, data=values)
     content_json = json.loads(content.text)
     announcement_list.append(content_json['announcements'])
-    while content_json['hasMore'] and len(announcement_list) < 3:
+    # while content_json['hasMore'] and len(announcement_list) < 3:
+    while content_json['hasMore']:
         values['pageNum'] = str(int(values['pageNum']) + 1)
         content = requests.post(url, data=values)
         content_json = json.loads(content.text)
@@ -56,6 +70,8 @@ if __name__ == '__main__':
             # print download_path
             # command_str = 'wget ' + download_path + ' -O ' + \
             #     item['secName'] + '_' + announcement_time
-            command_str = 'wget ' + download_path
+            command_str = 'wget ' + download_path + ' -O ' + \
+                          item['secCode'] + '_' + announcement_time
+            # command_str = 'wget ' + download_path
             # print command_str
             os.system(command_str)
