@@ -1,0 +1,301 @@
+//#define vtkRenderingCore_AUTOINIT4(vtkInteractionStyle, vtkRenderingFreeType, vtkRenderingFreeTypeOpenGL, vtkRenderingOpenGL)
+//#define vtkRenderingVolume_AUTOINIT 1(vtkRenderingVolumeOpenGL)
+#include <vtkSmartPointer.h>
+
+#include <vtkCurvatures.h>
+
+#include <vtkXMLPolyDataReader.h>
+#include <vtkXMLPolyDataWriter.h>
+
+#include <vtkLookupTable.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkColorSeries.h>
+
+#include <vtkPointData.h>
+
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkScalarBarActor.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderer.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderingCoreModule.h>
+#include <vtkPolyDataNormals.h>
+//#include <vtkDataArray.h>
+//#include "vtkTypedDataArray.h"
+
+
+
+#if defined(_DEBUG) 
+//#pragma comment(lib, "opencv_world300d.lib")
+#pragma comment(lib, "vtkalglib-7.0.lib")
+#pragma comment(lib, "vtkChartsCore-7.0.lib")
+#pragma comment(lib, "vtkCommonColor-7.0.lib")
+#pragma comment(lib, "vtkCommonDataModel-7.0.lib")
+#pragma comment(lib, "vtkCommonMath-7.0.lib")
+#pragma comment(lib, "vtkCommonCore-7.0.lib")
+#pragma comment(lib, "vtksys-7.0.lib")
+#pragma comment(lib, "vtkTestingRendering-7.0.lib")
+#pragma comment(lib, "vtkCommonMisc-7.0.lib")
+#pragma comment(lib, "vtkCommonSystem-7.0.lib")
+#pragma comment(lib, "vtkCommonTransforms-7.0.lib")
+#pragma comment(lib, "vtkInfovisCore-7.0.lib")
+#pragma comment(lib, "vtkFiltersExtraction-7.0.lib")
+#pragma comment(lib, "vtkCommonExecutionModel-7.0.lib")
+#pragma comment(lib, "vtkFiltersCore-7.0.lib")
+#pragma comment(lib, "vtkFiltersGeneral-7.0.lib")
+#pragma comment(lib, "vtkCommonComputationalGeometry-7.0.lib")
+#pragma comment(lib, "vtkFiltersStatistics-7.0.lib")
+#pragma comment(lib, "vtkImagingFourier-7.0.lib")
+#pragma comment(lib, "vtkImagingCore-7.0.lib")
+#pragma comment(lib, "vtkRenderingContext2D-7.0.lib")
+#pragma comment(lib, "vtkRenderingCore-7.0.lib")
+#pragma comment(lib, "vtkFiltersGeometry-7.0.lib")
+#pragma comment(lib, "vtkFiltersSources-7.0.lib")
+#pragma comment(lib, "vtkRenderingFreeType-7.0.lib")
+#pragma comment(lib, "vtkfreetype-7.0.lib")
+#pragma comment(lib, "vtkzlib-7.0.lib")
+#pragma comment(lib, "vtkDICOMParser-7.0.lib")
+#pragma comment(lib, "vtkDomainsChemistry-7.0.lib")
+#pragma comment(lib, "vtkIOXML-7.0.lib")
+#pragma comment(lib, "vtkIOGeometry-7.0.lib")
+#pragma comment(lib, "vtkIOCore-7.0.lib")
+#pragma comment(lib, "vtkIOXMLParser-7.0.lib")
+#pragma comment(lib, "vtkexpat-7.0.lib")
+#pragma comment(lib, "vtkDomainsChemistryOpenGL2-7.0.lib")
+#pragma comment(lib, "vtkRenderingOpenGL2-7.0.lib")
+#pragma comment(lib, "vtkImagingHybrid-7.0.lib")
+#pragma comment(lib, "vtkIOImage-7.0.lib")
+#pragma comment(lib, "vtkmetaio-7.0.lib")
+#pragma comment(lib, "vtkmyCommon.lib")
+#pragma comment(lib, "vtkmyImaging.lib")
+#pragma comment(lib, "vtkmyUnsorted.lib")
+#pragma comment(lib, "vtkjpeg-7.0.lib")
+#pragma comment(lib, "vtkpng-7.0.lib")
+#pragma comment(lib, "vtktiff-7.0.lib")
+#pragma comment(lib, "vtkglew-7.0.lib")
+#pragma comment(lib, "vtkexoIIc-7.0.lib")
+#pragma comment(lib, "vtkNetCDF-7.0.lib")
+#pragma comment(lib, "vtkNetCDF_cxx-7.0.lib")
+#pragma comment(lib, "vtkhdf5_hl-7.0.lib")
+#pragma comment(lib, "vtkhdf5-7.0.lib")
+#pragma comment(lib, "vtkFiltersAMR-7.0.lib")
+#pragma comment(lib, "vtkParallelCore-7.0.lib")
+#pragma comment(lib, "vtkIOLegacy-7.0.lib")
+#pragma comment(lib, "vtkFiltersFlowPaths-7.0.lib")
+#pragma comment(lib, "vtkFiltersGeneric-7.0.lib")
+#pragma comment(lib, "vtkFiltersHybrid-7.0.lib")
+#pragma comment(lib, "vtkImagingSources-7.0.lib")
+#pragma comment(lib, "vtkFiltersHyperTree-7.0.lib")
+#pragma comment(lib, "vtkFiltersImaging-7.0.lib")
+#pragma comment(lib, "vtkImagingGeneral-7.0.lib")
+#pragma comment(lib, "vtkFiltersModeling-7.0.lib")
+#pragma comment(lib, "vtkFiltersParallel-7.0.lib")
+#pragma comment(lib, "vtkFiltersParallelImaging-7.0.lib")
+#pragma comment(lib, "vtkFiltersProgrammable-7.0.lib")
+#pragma comment(lib, "vtkFiltersSelection-7.0.lib")
+#pragma comment(lib, "vtkFiltersSMP-7.0.lib")
+#pragma comment(lib, "vtkFiltersTexture-7.0.lib")
+#pragma comment(lib, "vtkFiltersVerdict-7.0.lib")
+#pragma comment(lib, "vtkverdict-7.0.lib")
+#pragma comment(lib, "vtkGeovisCore-7.0.lib")
+#pragma comment(lib, "vtkInfovisLayout-7.0.lib")
+#pragma comment(lib, "vtkInteractionStyle-7.0.lib")
+#pragma comment(lib, "vtkInteractionWidgets-7.0.lib")
+#pragma comment(lib, "vtkRenderingAnnotation-7.0.lib")
+#pragma comment(lib, "vtkImagingColor-7.0.lib")
+#pragma comment(lib, "vtkRenderingVolume-7.0.lib")
+#pragma comment(lib, "vtkViewsCore-7.0.lib")
+#pragma comment(lib, "vtkproj4-7.0.lib")
+#pragma comment(lib, "vtkImagingMath-7.0.lib")
+#pragma comment(lib, "vtkImagingMorphological-7.0.lib")
+#pragma comment(lib, "vtkImagingStatistics-7.0.lib")
+#pragma comment(lib, "vtkImagingStencil-7.0.lib")
+#pragma comment(lib, "vtkInteractionImage-7.0.lib")
+#pragma comment(lib, "vtkIOAMR-7.0.lib")
+#pragma comment(lib, "vtkIOEnSight-7.0.lib")
+#pragma comment(lib, "vtkIOExodus-7.0.lib")
+#pragma comment(lib, "vtkIOExport-7.0.lib")
+#pragma comment(lib, "vtkRenderingLabel-7.0.lib")
+#pragma comment(lib, "vtkIOImport-7.0.lib")
+#pragma comment(lib, "vtkIOInfovis-7.0.lib")
+#pragma comment(lib, "vtklibxml2-7.0.lib")
+#pragma comment(lib, "vtkIOLSDyna-7.0.lib")
+#pragma comment(lib, "vtkIOMINC-7.0.lib")
+#pragma comment(lib, "vtkIOMovie-7.0.lib")
+#pragma comment(lib, "vtkoggtheora-7.0.lib")
+#pragma comment(lib, "vtkIONetCDF-7.0.lib")
+#pragma comment(lib, "vtkIOParallel-7.0.lib")
+#pragma comment(lib, "vtkjsoncpp-7.0.lib")
+#pragma comment(lib, "vtkIOParallelXML-7.0.lib")
+#pragma comment(lib, "vtkIOPLY-7.0.lib")
+#pragma comment(lib, "vtkIOSQL-7.0.lib")
+#pragma comment(lib, "vtksqlite-7.0.lib")
+#pragma comment(lib, "vtkIOVideo-7.0.lib")
+#pragma comment(lib, "vtkLocalExample-7.0.lib")
+#pragma comment(lib, "vtkRenderingContextOpenGL2-7.0.lib")
+#pragma comment(lib, "vtkRenderingImage-7.0.lib")
+#pragma comment(lib, "vtkRenderingLOD-7.0.lib")
+#pragma comment(lib, "vtkRenderingVolumeOpenGL2-7.0.lib")
+#pragma comment(lib, "vtkViewsContext2D-7.0.lib")
+#pragma comment(lib, "vtkViewsInfovis-7.0.lib")
+#else
+#endif
+
+int main(int argc, char *argv[])
+{
+	
+	// Parse command line arguments
+	if (argc < 2)
+	{
+		std::cerr << "Usage: " << argv[0] << " Filename(.vtp)" << std::endl;
+		return EXIT_FAILURE;
+	}
+	
+	// Create a polydata
+	vtkSmartPointer<vtkXMLPolyDataReader> reader =
+		vtkSmartPointer<vtkXMLPolyDataReader>::New();
+	reader->SetFileName(argv[1]);
+	
+	
+	
+	
+	
+	vtkSmartPointer<vtkCurvatures> curvaturesFilter =
+		vtkSmartPointer<vtkCurvatures>::New();
+
+	curvaturesFilter->SetInputConnection(reader->GetOutputPort());
+	curvaturesFilter->SetCurvatureTypeToMinimum();
+	curvaturesFilter->SetCurvatureTypeToMaximum();
+	curvaturesFilter->SetCurvatureTypeToGaussian();
+	curvaturesFilter->SetCurvatureTypeToMean();
+	curvaturesFilter->Update();
+
+	
+
+	///////
+	vtkPolyData* output = curvaturesFilter->GetOutput();
+	if (1)
+	{
+
+		vtkIdType numPts = output->GetNumberOfPoints();
+		vtkDataArray *mean = static_cast<vtkDataArray *>(output->GetPointData()->GetArray("Mean_Curvature"));
+		double curvatureRange[2];
+		mean->GetRange(curvatureRange);
+		double m;
+		double clip = curvatureRange[1] * 0.005;
+		for (vtkIdType i = 0; i<numPts; i++)
+		{
+			m = mean->GetComponent(i, 0);
+			if (m > clip) m = clip;
+			if (m < -clip) m = -clip;
+			mean->SetComponent(i, 0, m);
+		}
+		mean->Modified();
+	}
+	/////////////////////////////////////////////////////////////
+	
+
+
+
+	// Get scalar range from command line if present, otherwise use
+	// range of computed curvature
+	double scalarRange[2];
+	if (argc >= 4)
+	{
+		scalarRange[0] = atof(argv[2]);
+		scalarRange[1] = atof(argv[3]);
+	}
+	else
+	{
+		curvaturesFilter->GetOutput()->GetScalarRange(scalarRange);
+	}
+
+	int scheme = 16;
+	if (argc >= 5)
+	{
+		scheme = atoi(argv[4]);
+	}
+	///////////////
+	
+	// Build a lookup table
+	vtkSmartPointer<vtkColorSeries> colorSeries =
+		vtkSmartPointer<vtkColorSeries>::New();
+	colorSeries->SetColorScheme(scheme);
+	std::cout << "Using color scheme #: "
+		<< colorSeries->GetColorScheme() << " is "
+		<< colorSeries->GetColorSchemeName() << std::endl;
+
+	vtkSmartPointer<vtkColorTransferFunction> lut =
+		vtkSmartPointer<vtkColorTransferFunction>::New();
+	lut->SetColorSpaceToHSV();
+
+	// Use a color series to create a transfer function
+	int numColors = colorSeries->GetNumberOfColors();
+	for (int i = 0; i < numColors; i++)
+	{
+		vtkColor3ub color = colorSeries->GetColor(i);
+		double dColor[3];
+		dColor[0] = static_cast<double> (color[0]) / 255.0;
+		dColor[1] = static_cast<double> (color[1]) / 255.0;
+		dColor[2] = static_cast<double> (color[2]) / 255.0;
+		double t = scalarRange[0] + (scalarRange[1] - scalarRange[0])
+			/ (numColors - 1) * i;
+		lut->AddRGBPoint(t, dColor[0], dColor[1], dColor[2]);
+	}
+
+
+
+	// Create a mapper and actor
+	vtkSmartPointer<vtkPolyDataMapper> mapper =
+		vtkSmartPointer<vtkPolyDataMapper>::New();
+	mapper->SetInputConnection(curvaturesFilter->GetOutputPort());
+	mapper->SetLookupTable(lut);
+	mapper->SetScalarRange(scalarRange);
+
+
+	
+	vtkSmartPointer<vtkActor> actor =
+		vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(mapper);
+
+	// Create a scalar bar
+	vtkSmartPointer<vtkScalarBarActor> scalarBar =
+		vtkSmartPointer<vtkScalarBarActor>::New();
+	scalarBar->SetLookupTable(mapper->GetLookupTable());
+	scalarBar->SetTitle(
+		curvaturesFilter->GetOutput()->GetPointData()->GetScalars()->GetName());
+	scalarBar->SetNumberOfLabels(5);
+
+	// Create a renderer, render window, and interactor
+	vtkSmartPointer<vtkRenderer> renderer =
+		vtkSmartPointer<vtkRenderer>::New();
+	vtkSmartPointer<vtkRenderWindow> renderWindow =
+		vtkSmartPointer<vtkRenderWindow>::New();
+	renderWindow->AddRenderer(renderer);
+	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor =
+		vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	renderWindowInteractor->SetRenderWindow(renderWindow);
+
+	// Add the actors to the scene
+	renderer->AddActor(actor);
+	renderer->AddActor2D(scalarBar);
+
+	renderer->SetBackground(.1, .2, .3); // Background color blue
+
+	// Render and interact
+	renderWindow->Render();
+	renderWindowInteractor->Start();
+
+	
+
+	//// Write the file
+	vtkSmartPointer<vtkXMLPolyDataWriter> writer =
+		vtkSmartPointer<vtkXMLPolyDataWriter>::New();
+	writer->SetInputConnection(curvaturesFilter->GetOutputPort());
+	writer->SetFileName("test.vtp");
+	writer->Write();
+
+	return EXIT_SUCCESS;
+}
+
