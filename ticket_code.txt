@@ -1,0 +1,12 @@
+gr 高级软卧
+rw 软卧
+rz 软座
+srrb 动卧
+swz 商务座
+tz 特等座
+wz 无座
+yw 硬卧
+yyrw 高级动卧
+yz 硬座
+ze 二等座
+zy 一等座

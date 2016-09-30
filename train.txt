@@ -1,0 +1,13 @@
+gg_num --
+gr_num --
+qt_num --
+rw_num --
+rz_num 无
+swz_num --
+tz_num --
+wz_num 1
+yb_num --
+yw_num --
+yz_num 无
+ze_num --
+zy_num --
